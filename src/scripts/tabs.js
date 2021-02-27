@@ -103,20 +103,29 @@ export default function Tabs () {
         }
 
         var code = event.key || event.charCode || event.keyCode;
-
+        console.log(code);
         switch (code) {
             case "Left":
             case "ArrowLeft":
             case 37:
-                // Key left.
+                // Key left
                 _switchTab(this.previousElementSibling, event);
                 break;
             case "Right":
             case "ArrowRight":
             case 39:
-                // Key right.
+                // Key right
                 _switchTab(this.nextElementSibling, event);
                 break;
+            case "Home":
+            case 36: 
+                //Home key
+                _switchTab(this.parentElement.firstElementChild, event);
+                break;
+            case "End":
+            case 35: 
+                //End key
+                _switchTab(this.parentElement.lastElementChild, event);
             default:
         }
     };
