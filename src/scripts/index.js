@@ -1,7 +1,7 @@
-import '../styles/index.scss';
+import "../styles/index.scss";
+import Tabs from "./tabs";
 
-if (process.env.NODE_ENV === 'development') {
-  require('../index.html');
-}
-
-console.log('webpack starterkit');
+document.addEventListener("DOMContentLoaded", function() {
+  const tabs = new Tabs;
+  tabs.init();
+});

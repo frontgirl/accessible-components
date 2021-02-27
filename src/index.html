@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>webpack starterkit</title>
+  <title>Accessible Tab Panels Demo</title>
 </head>
+
 <body>
-  <h1>webpack starter</h1>
-  <p>✨ A lightweight foundation for your next webpack based frontend project.</p>
+  <main>
+    <h1>Accessible Tab Panels Demo</h1>
+    <div class="g-tab__tab-group" data-tabs>
+      <ul class="g-tab__tab-list">
+        <li class="g-tab__tab" data-tab><a href="#tab1">Tab 1</a></li>
+        <li class="g-tab__tab" data-tab><a href="#tab2">Tab 2</a></li>
+        <li class="g-tab__tab" data-tab><a href="#tab3">Tab 3</a></li>
+      </ul>
+
+      <section id="tab1" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 1</h3>
+        Tab 1 first section.
+        <a href="google.com">Google</a>
+      </section>
+
+      <section id="tab2" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 2</h3>
+        Tab 2 first section.
+      </section>
+
+      <section id="tab3" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 3</h3>
+        Tab 3 first section.
+      </section>
+    </div>
+
+    <div class="g-tab__tab-group" data-tabs>
+      <ul class="g-tab__tab-list">
+        <li class="g-tab__tab" data-tab><a href="#tab4">Tab 4</a></li>
+        <li class="g-tab__tab" data-tab><a href="#tab5">Tab 5</a></li>
+        <li class="g-tab__tab" data-tab><a href="#tab6">Tab 6</a></li>
+      </ul>
+
+      <section id="tab4" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 4</h3>
+        Tab 4 first section.
+      </section>
+
+      <section id="tab5" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 5</h3>
+        Tab 5 first section.
+      </section>
+
+      <section id="tab6" class="g-tab__tab-panel" data-tab-panel>
+        <h3>Tab 6</h3>
+        Tab 6 first section.
+      </section>
+    </div>
+
+    <footnote>
+      <p>The solution based on <a href="https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-1/tabs.html">Example
+          of tabs with Automatic Activation</a> and <a
+          href="https://cliener.tumblr.com/post/139412933763/how-tabs-should-really-work">blog post</a>.</p>
+    </footnote>
+  </main>
 </body>
+
 </html>
