@@ -1,24 +1,38 @@
 $tab-colour: #eef;
 $tab-colour-selected: #000;
 $tab-background-colour-selected: #fff;
+$tab-outline: #000;
+
+$border-width: 2px;
 
 .g-tab__tab-list {
   list-style: none;
   padding-left: 0;
-  margin-bottom: 0;
+  margin-bottom: -$border-width;
 }
 
 .g-tab__tab {
   display: inline-block;
 
   a {
+    position: relative;
     display: inline-block;
-    padding: 5px;
-    border: 2px solid;
-    border-bottom: 0;
+    padding: 5px 10px;
+    border: $border-width solid;
+    border-radius: 4px 4px 0 0;
     background: $tab-colour;
     text-decoration: none;
     touch-action: manipulation;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -$border-width;
+      width: 100%;
+      height: $border-width;
+      background-color: $tab-colour-selected;
+    }
 
     &:hover,
     &:focus {
@@ -33,6 +47,12 @@ $tab-background-colour-selected: #fff;
     background: $tab-background-colour-selected;
     border-color: $tab-colour-selected;
     color: $tab-colour-selected;
+    border-top-width: 4px;
+    padding-top: 3px;
+
+    &::after {
+      background-color: $tab-background-colour-selected;
+    }
   }
 }
 
@@ -42,4 +62,5 @@ $tab-background-colour-selected: #fff;
 
 .g-tab__tab-panel {
   border: 2px solid;
+  padding: 10px;
 }

@@ -1,6 +1,6 @@
 import Helpers from "./helpers";
 
-const TABS_SELECTOR = "[data-tabs] a";
+const TABS_SELECTOR = "[data-tab] > a";
 const TABS_TABWRAPPER_ATTR = 'data-tab';
 const TABS_TABWRAPPER_SELECTOR = "[" + TABS_TABWRAPPER_ATTR + "]";
 const TABS_GROUP_ATTR = 'data-tabs';
@@ -21,6 +21,7 @@ export default function Tabs () {
     function _setup () {
         //make all tablist anchors unselectable and label all tabs with their role
         const tabListAnchors = document.querySelectorAll(TABS_SELECTOR);
+
         Array.from(tabListAnchors).forEach((item) => {
             item.setAttribute("tabindex", "-1");
             item.parentElement.setAttribute("role", "tab");
