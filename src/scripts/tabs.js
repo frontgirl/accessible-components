@@ -41,15 +41,17 @@ export default function Tabs () {
 
             //stores if any tab is currently shown
             let anyShown = false;
+
             Array.from(tabPanels).forEach((tabPanel) => {
                 //tab associated with this tab panel
-                const associatedTab = document.querySelector(TABS_TABWRAPPER_SELECTOR + " a[href='#" + tabPanel.id + "']");
+                const associatedTab = document.querySelector(TABS_TABWRAPPER_SELECTOR + ">a[href='#" + tabPanel.id + "']");
                 //if tab panel ID is not in currentTabs
                 if (currentTabs.indexOf("#" + tabPanel.id) === -1) {
                     //hide it
                     helpers.setVisibility(tabPanel);
                     //remove from tab order
                     associatedTab.parentElement.setAttribute("tabindex", "-1");
+                    tabPanel.setAttribute("tabindex", "-1");
                 } else {
                     //leave it visible
                     anyShown = true;
