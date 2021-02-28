@@ -2,9 +2,9 @@ import Helpers from "./helpers";
 
 const TABS_SELECTOR = "[data-tab] > a";
 const TABS_TABWRAPPER_ATTR = 'data-tab';
-const TABS_TABWRAPPER_SELECTOR = "[" + TABS_TABWRAPPER_ATTR + "]";
+const TABS_TABWRAPPER_SELECTOR = `[${TABS_TABWRAPPER_ATTR}]`;
 const TABS_GROUP_ATTR = 'data-tabs';
-const TABS_GROUP_SELECTOR = "[" + TABS_GROUP_ATTR + "]";
+const TABS_GROUP_SELECTOR = `[${TABS_GROUP_ATTR}]`;
 const TABS_PANEL_SELECTOR = "[data-tab-panel]";
 
 const helpers = Helpers();
@@ -14,7 +14,7 @@ export default function Tabs () {
 
     //index value for local storage. Uses the current URL to uniquely mark the page
     //potential problem here where the URL changes
-    const _storageIndex = "selectedTabPanel" + document.location;
+    const _storageIndex = `selectedTabPanel${document.location}`;
     /* Constructor Helpers */
 
     // First run setup
@@ -26,6 +26,13 @@ export default function Tabs () {
             item.setAttribute("tabindex", "-1");
             item.parentElement.setAttribute("role", "tab");
             item.parentElement.parentElement.setAttribute("role", "tablist");
+            //check if there's a matching panel
+            const tabPanelID = item.getAttribute("href");
+            const tabPanel = document.querySelector(tabPanelID);
+            if (!tabPanel ) {
+                //There's an error in makup - there's no tab matching to the panel
+                throw `The tab click refers to non existing panel with id ${tabPanelID}. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
+            }
         });
 
         //fetch previously selected tabs
@@ -44,9 +51,13 @@ export default function Tabs () {
 
             Array.from(tabPanels).forEach((tabPanel) => {
                 //tab associated with this tab panel
-                const associatedTab = document.querySelector(TABS_TABWRAPPER_SELECTOR + ">a[href='#" + tabPanel.id + "']");
+                const associatedTab = document.querySelector(`${TABS_TABWRAPPER_SELECTOR}>a[href='#${tabPanel.id}']`);
+                if (!associatedTab) {
+                    //There's an error in makup - there's no tab matching to the panel
+                    throw `The panel with id ${tabPanel.id} doesn't have matching tab. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
+                }
                 //if tab panel ID is not in currentTabs
-                if (currentTabs.indexOf("#" + tabPanel.id) === -1) {
+                if (currentTabs.indexOf(`#${tabPanel.id}`) === -1) {
                     //hide it
                     helpers.setVisibility(tabPanel);
                     //remove from tab order
@@ -104,8 +115,8 @@ export default function Tabs () {
             return;
         }
 
-        var code = event.key || event.charCode || event.keyCode;
-        console.log(code);
+        const code = event.key || event.charCode || event.keyCode;
+
         switch (code) {
             case "Left":
             case "ArrowLeft":
@@ -172,12 +183,12 @@ export default function Tabs () {
         }
 
         //hide old tab panel
-        var oldTabPanel = document.querySelector(oldTabPanelID);
+        const oldTabPanel = document.querySelector(oldTabPanelID);
         oldTabPanel.setAttribute("aria-hidden", "true");
         oldTabPanel.setAttribute("tabindex", "-1");
 
         //remove old tab ID from storage
-        var tabIndex = currentTabs.indexOf(oldTabPanelID);
+        const tabIndex = currentTabs.indexOf(oldTabPanelID);
         if (tabIndex > -1) {
             currentTabs.splice(tabIndex, 1);
         }
@@ -187,10 +198,11 @@ export default function Tabs () {
         this.setAttribute("tabindex", "0");
 
         //show new tab panel
-        var newTabPanelID = this.firstChild.getAttribute("href");
+        const newTabPanelID = this.firstChild.getAttribute("href");
 
         //show new tab
-        var newTabPanel = document.querySelector(newTabPanelID);
+        const newTabPanel = document.querySelector(newTabPanelID);
+
         newTabPanel.setAttribute("aria-hidden", "false");
         newTabPanel.setAttribute("tabindex", "0");
 
