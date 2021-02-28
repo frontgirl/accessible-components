@@ -9,7 +9,7 @@ const TABS_PANEL_SELECTOR = "[data-tab-panel]";
 
 const helpers = Helpers();
 
-export default function Tabs () {
+export default function Tabs() {
     /* Properties */
 
     //index value for local storage. Uses the current URL to uniquely mark the page
@@ -18,22 +18,22 @@ export default function Tabs () {
     /* Constructor Helpers */
 
     // First run setup
-    function _setup () {
+    function _setup() {
         //make all tablist anchors unselectable and label all tabs with their role
         const tabListAnchors = document.querySelectorAll(TABS_SELECTOR);
 
-        Array.from(tabListAnchors).forEach((item) => {
-            item.setAttribute("tabindex", "-1");
-            item.parentElement.setAttribute("role", "tab");
-            item.parentElement.parentElement.setAttribute("role", "tablist");
+        for (const tabAnchor of tabListAnchors) {
+            tabAnchor.setAttribute("tabindex", "-1");
+            tabAnchor.parentElement.setAttribute("role", "tab");
+            tabAnchor.parentElement.parentElement.setAttribute("role", "tablist");
             //check if there's a matching panel
-            const tabPanelID = item.getAttribute("href");
+            const tabPanelID = tabAnchor.getAttribute("href");
             const tabPanel = document.querySelector(tabPanelID);
-            if (!tabPanel ) {
+            if (!tabPanel) {
                 //There's an error in makup - there's no tab matching to the panel
-                throw `The tab click refers to non existing panel with id ${tabPanelID}. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
+                throw `The panel with id ${tabPanelID} does not exist. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
             }
-        });
+        }
 
         //fetch previously selected tabs
         const currentTabs = _getCurrentTabs();
@@ -42,14 +42,14 @@ export default function Tabs () {
         const tabGroups = document.querySelectorAll(TABS_GROUP_SELECTOR);
 
         //initialise tabs
-        Array.from(tabGroups).forEach((tabGroup) => {
+        for (const tabGroup of tabGroups) {
             //hide tab panels (for all tab groups)
             const tabPanels = tabGroup.querySelectorAll(TABS_PANEL_SELECTOR);
 
             //stores if any tab is currently shown
             let anyShown = false;
 
-            Array.from(tabPanels).forEach((tabPanel) => {
+            for (const tabPanel of tabPanels) {
                 //tab associated with this tab panel
                 const associatedTab = document.querySelector(`${TABS_TABWRAPPER_SELECTOR}>a[href='#${tabPanel.id}']`);
                 if (!associatedTab) {
@@ -73,10 +73,11 @@ export default function Tabs () {
                     //restore to tab order
                     associatedTab.parentElement.setAttribute("tabindex", "0");
                 }
-            });
+            }
 
             //if any tab panels are selected, we're done
             if (!anyShown) {
+                //if there's no selected tabs,
                 //select the first tab as default
 
                 //show the first tab panel
@@ -89,24 +90,24 @@ export default function Tabs () {
                 firstTab.setAttribute("aria-selected", "true");
                 firstTab.setAttribute("tabindex", "0");
             }
-        });
+        };
     };
 
     // Event binding
-    function _bind () {
+    function _bind() {
         const tabs = document.querySelectorAll(TABS_TABWRAPPER_SELECTOR);
         //if any of the tabs are clicked run activateTab
-        Array.from(tabs).forEach(tab => {
+        for (const tab of tabs) {
             tab.addEventListener("click", _activateTab);
             //this is what should work but support is shaky in testing
             tab.addEventListener("keydown", _handleKeyEvents);
-        });
+        };
     };
 
     /* Event Handlers */
 
-    function _handleKeyEvents (event) {
-    
+    function _handleKeyEvents(event) {
+
         if (!event) {
             event = window.event;
         }
@@ -131,12 +132,12 @@ export default function Tabs () {
                 _switchTab(this.nextElementSibling, event);
                 break;
             case "Home":
-            case 36: 
+            case 36:
                 //Home key
                 _switchTab(this.parentElement.firstElementChild, event);
                 break;
             case "End":
-            case 35: 
+            case 35:
                 //End key
                 _switchTab(this.parentElement.lastElementChild, event);
             default:
@@ -145,7 +146,7 @@ export default function Tabs () {
 
     /* Methods */
 
-    function _switchTab (sibling, event) {
+    function _switchTab(sibling, event) {
         //if there's no sibling object passed or it has no attribute, do nothing
         if (!sibling || !sibling.hasAttribute(TABS_TABWRAPPER_ATTR)) {
             return;
@@ -157,7 +158,7 @@ export default function Tabs () {
         event.preventDefault();
     };
 
-    function _activateTab (event) {
+    function _activateTab(event) {
         //check if there are any tab groups on the page
         const tabGroup = this.parentElement.parentElement;
 
@@ -214,7 +215,7 @@ export default function Tabs () {
         event.preventDefault();
     };
 
-    function _getCurrentTabs () {
+    function _getCurrentTabs() {
         let currentTabs = [];
         const storedTabs = localStorage.getItem(_storageIndex);
         if (storedTabs) {
@@ -224,7 +225,7 @@ export default function Tabs () {
     };
 
     /* Public Methods */
-    function init () {
+    function init() {
         //if tab groups don't exist, go no further
         if (!document.querySelector(TABS_GROUP_SELECTOR)) {
             return;
