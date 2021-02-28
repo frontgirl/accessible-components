@@ -5,6 +5,24 @@ $tab-outline: #000;
 
 $border-width: 2px;
 
+// basic styling
+
+[data-tab-panel][aria-hidden="true"] {
+  display: none;
+}
+
+[data-tab] {
+  display: inline-block;
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    touch-action: manipulation;
+  }
+}
+
+//colors, borders etc.
+
 .g-tab__tab-list {
   list-style: none;
   padding-left: 0;
@@ -12,17 +30,12 @@ $border-width: 2px;
 }
 
 .g-tab__tab {
-  display: inline-block;
-
   a {
     position: relative;
-    display: inline-block;
     padding: 5px 10px;
     border: $border-width solid;
     border-radius: 4px 4px 0 0;
     background: $tab-colour;
-    text-decoration: none;
-    touch-action: manipulation;
 
     &::after {
       content: "";
@@ -54,10 +67,6 @@ $border-width: 2px;
       background-color: $tab-background-colour-selected;
     }
   }
-}
-
-[aria-hidden="true"] {
-  display: none;
 }
 
 .g-tab__tab-panel {
