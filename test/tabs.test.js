@@ -45,7 +45,7 @@ test('tests if second tab is active after key right pressed', () => {
   document.body.innerHTML = markup;
   const tabs = new Tabs;
   tabs.init();
-  // console.log(document.body.innerHTML);
+
   const keyEvent = new KeyboardEvent('keydown', {//Key Right
     bubbles: true, cancelable: true, keyCode: 39
   });
@@ -66,10 +66,11 @@ test('tests if last tab is active after end key pressed', () => {
   document.body.innerHTML = markup;
   const tabs = new Tabs;
   tabs.init();
-  // console.log(document.body.innerHTML);
+  
   const keyEvent = new KeyboardEvent('keydown', {//End key
     bubbles: true, cancelable: true, keyCode: 35
   });
+  
   //Emulate keypress event for tab 1
   document.body.querySelectorAll('[data-tab]')[0].dispatchEvent(keyEvent);
   // tab 3 becomes active
@@ -83,6 +84,32 @@ test('tests if last tab is active after end key pressed', () => {
   expect(screen.queryByTestId('tabpanel3')).toHaveAttribute("tabindex", "0");
 });
 
+test('tests if first tab is active after home key pressed', () => {
+  document.body.innerHTML = markup;
+  const tabs = new Tabs;
+  tabs.init();
+
+  const keyEndEvent = new KeyboardEvent('keydown', {//End key
+    bubbles: true, cancelable: true, keyCode: 35
+  });
+
+  const keyHomeEvent = new KeyboardEvent('keydown', {//Key Right
+    bubbles: true, cancelable: true, keyCode: 36
+  });
+  //Emulate keypress event for tab 1
+  document.body.querySelectorAll('[data-tab]')[0].dispatchEvent(keyEndEvent);
+  //Emulate keypress event for tab 3
+  document.body.querySelectorAll('[data-tab]')[2].dispatchEvent(keyHomeEvent);
+  // tab 1 should be active
+  expect(screen.queryByTestId('tab1')).toHaveAttribute("aria-selected", "true");
+  //only tabpanel 1 is visible now
+  expect(screen.queryByTestId('tabpanel1')).toHaveAttribute("aria-hidden", "false");
+  expect(screen.queryByTestId('tabpanel1')).toHaveAttribute("tabindex", "0");
+  expect(screen.queryByTestId('tabpanel2')).toHaveAttribute("aria-hidden", "true");
+  expect(screen.queryByTestId('tabpanel2')).toHaveAttribute("tabindex", "-1");
+  expect(screen.queryByTestId('tabpanel3')).toHaveAttribute("aria-hidden", "true");
+  expect(screen.queryByTestId('tabpanel3')).toHaveAttribute("tabindex", "-1");
+});
 
 test('tests if exception throws then panel is missing', () => {
   const brokenMarkup = `<div class="g-tab__tab-group" data-tabs>

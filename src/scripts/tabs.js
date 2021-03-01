@@ -198,10 +198,10 @@ export default function Tabs() {
         this.setAttribute("aria-selected", "true");
         this.setAttribute("tabindex", "0");
 
-        //show new tab panel
+        //get new tab panel
         const newTabPanelID = this.firstChild.getAttribute("href");
 
-        //show new tab
+        //get new tab
         const newTabPanel = document.querySelector(newTabPanelID);
 
         newTabPanel.setAttribute("aria-hidden", "false");
