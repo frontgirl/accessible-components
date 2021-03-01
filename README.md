@@ -65,7 +65,7 @@ Keys support according to W3C [Example of tabs with Automatic Activation](https:
 - When focus moves into the tab list, places focus on the active tab element .
 - When the tab list contains the focus, moves focus to the next element in the tab sequence, which is the tabpanel element.
 
-### Right Arrow
+#### Right Arrow
 - Moves focus to the next tab.
 - If focus is on the last tab, moves focus to the first tab.
 - Activates the newly focused tab.
