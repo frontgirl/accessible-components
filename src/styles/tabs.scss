@@ -30,10 +30,10 @@ $border-width: 2px;
 }
 
 .g-tab__tab {
-
   &:focus {
     box-shadow: 0 0 2px 2px $tab-outline;
   }
+
   a {
     position: relative;
     padding: 5px 10px;

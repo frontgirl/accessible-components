@@ -32,6 +32,8 @@ export default function Tabs() {
             if (!tabPanel) {
                 //There's an error in makup - there's no tab matching to the panel
                 throw `The panel with id ${tabPanelID} does not exist. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
+            } else {
+                tabAnchor.parentElement.setAttribute("aria-controls", tabPanel.id);
             }
         }
 
@@ -55,6 +57,8 @@ export default function Tabs() {
                 if (!associatedTab) {
                     //There's an error in makup - there's no tab matching to the panel
                     throw `The panel with id ${tabPanel.id} doesn't have matching tab. You can find an example of correct markdown at https://github.com/frontgirl/accessible-components`;
+                } else {
+                    tabPanel.setAttribute('aria-labelledby', associatedTab.id);
                 }
                 //if tab panel ID is not in currentTabs
                 if (currentTabs.indexOf(`#${tabPanel.id}`) === -1) {
