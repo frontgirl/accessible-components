@@ -17,10 +17,19 @@ export default function helpers() {
             event.shiftKey;
     };
 
+    const getUrlHashArray = () => {
+        if (window.location.hash) {
+            return window.location.hash.split('#').filter(hash => hash !== '');
+        } else {
+            return false;
+        }
+    };
+
     return {
         setVisibility,
         setExpandedState,
         sanitiseRegEx,
-        keyModiferActive
+        keyModiferActive,
+        getUrlHashArray
     };
 };

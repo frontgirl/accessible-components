@@ -15,6 +15,8 @@ export default function Tabs() {
     //index value for local storage. Uses the current URL to uniquely mark the page
     //potential problem here where the URL changes
     const _storageIndex = `selectedTabPanel${document.location}`;
+    const hashArray = helpers.getUrlHashArray();
+
     /* Constructor Helpers */
 
     // First run setup
@@ -50,7 +52,24 @@ export default function Tabs() {
 
             //stores if any tab is currently shown
             let anyShown = false;
-
+            let initFromHash = false;
+            for (const tabPanel of tabPanels) {
+                if (hashArray.length && hashArray.find((hash) => tabPanel.id === hash)) {
+                    initFromHash = tabPanel.id;
+                }
+            }
+            //if any hash provided and one of hash ids is in current tab group
+            if (initFromHash) {
+                //remove current tab of these group from currentTabs
+                for (const tabPanel of tabPanels) {
+                    const index = currentTabs.indexOf(`#${tabPanel.id}`);
+                    if (index !== -1) {
+                        currentTabs.splice(index, 1);
+                    }
+                }
+                currentTabs.push(`#${initFromHash}`);   
+            }
+        
             for (const tabPanel of tabPanels) {
                 //tab associated with this tab panel
                 const associatedTab = document.querySelector(`${TABS_TABWRAPPER_SELECTOR}>a[href='#${tabPanel.id}']`);
@@ -60,6 +79,7 @@ export default function Tabs() {
                 } else {
                     tabPanel.setAttribute('aria-labelledby', associatedTab.id);
                 }
+                
                 //if tab panel ID is not in currentTabs
                 if (currentTabs.indexOf(`#${tabPanel.id}`) === -1) {
                     //hide it
@@ -77,9 +97,11 @@ export default function Tabs() {
                     //restore to tab order
                     associatedTab.parentElement.setAttribute("tabindex", "0");
                 }
+                
             }
 
-            //if any tab panels are selected, we're done
+            //if any tab panels are selected and there's no hash,
+            // we're done
             if (!anyShown) {
                 //if there's no selected tabs,
                 //select the first tab as default
